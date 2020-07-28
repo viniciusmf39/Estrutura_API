@@ -38,8 +38,9 @@ class User extends Model {
         sequelize,
       }
     );
+    this.removeAttribute('id');
     return this;
   }
 }
 
-export default User;dd
+export default User;
