@@ -27,7 +27,19 @@ class UserController {
     }
   }
 
-  async update(req, res) { }
+  async update(req, res) {
+    try {
+      const user = await User.update(req.body);
+
+      return res.json({ user });
+    } catch (error) {
+      const response = {
+        message: 'não foi possivel atualizar dados',
+        error,
+      };
+      return res.json(response);
+    }
+  }
 
   async delete(req, res) { }
 }
