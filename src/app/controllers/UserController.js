@@ -11,7 +11,18 @@ class UserController {
     }
   }
 
-  async show(req, res) { }
+  async show(req, res) {
+    try {
+      const (uid) = req.params;
+
+      const user = await User.findOne({ where: { uid } });
+
+      return res.json({ user });
+    } catch (error) {
+
+      return res.json(response);
+    }
+  }
 
   async store(req, res) {
     try {
@@ -29,19 +40,40 @@ class UserController {
 
   async update(req, res) {
     try {
-      const user = await User.update(req.body);
+      const { uid } = req.params;
+
+      const [user] = await User.update(req.body, { where: { uid } });
+
+      f(!user) {
+        throw Error('Usuário não encontrado');
+      }
+
+      return res.json({ user });
+    } catch (error) {
+
+      return res.json(response);
+    }
+  }
+
+  async delete(req, res) {
+    try {
+      const { uid } = req.params;
+
+      const deleted = await User.destroy({ where: { uid } });
+
+      if(!deleted) {
+        throw Error('Usuário não encontrado') ;
+      }
 
       return res.json({ user });
     } catch (error) {
       const response = {
-        message: 'não foi possivel atualizar dados',
+        message: 'Não foi possível excluir usuario',
         error,
       };
       return res.json(response);
     }
   }
-
-  async delete(req, res) { }
 }
 
 export default new UserController();

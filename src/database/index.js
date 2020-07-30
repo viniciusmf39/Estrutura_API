@@ -1,4 +1,4 @@
-import Sequelize  from 'sequelize';
+import Sequelize from 'sequelize';
 import 'dotenv/config';
 import databaseConfig from '../config/database';
 
