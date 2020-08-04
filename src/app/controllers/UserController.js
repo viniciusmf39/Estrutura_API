@@ -13,14 +13,13 @@ class UserController {
 
   async show(req, res) {
     try {
-      const (uid) = req.params;
+      const { uid } = req.params;
 
       const user = await User.findOne({ where: { uid } });
 
       return res.json({ user });
     } catch (error) {
-
-      return res.json(response);
+      return res.json(error);
     }
   }
 
@@ -44,14 +43,13 @@ class UserController {
 
       const [user] = await User.update(req.body, { where: { uid } });
 
-      f(!user) {
+      if (!user) {
         throw Error('Usuário não encontrado');
       }
 
       return res.json({ user });
     } catch (error) {
-
-      return res.json(response);
+      return res.json(error);
     }
   }
 
@@ -61,11 +59,11 @@ class UserController {
 
       const deleted = await User.destroy({ where: { uid } });
 
-      if(!deleted) {
-        throw Error('Usuário não encontrado') ;
+      if (!deleted) {
+        throw Error('Usuário não encontrado');
       }
 
-      return res.json({ user });
+      return res.json({ result: 'usuário deletado' });
     } catch (error) {
       const response = {
         message: 'Não foi possível excluir usuario',
